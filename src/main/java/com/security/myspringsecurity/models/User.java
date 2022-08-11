@@ -3,6 +3,7 @@ package com.security.myspringsecurity.models;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +18,14 @@ public class User  {
 
     @Column(nullable = false, length = 100)
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_authorities",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id")}
+    )
+    private List<Authority> authorities;
 
     public User() {
     }
@@ -54,5 +63,13 @@ public class User  {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }

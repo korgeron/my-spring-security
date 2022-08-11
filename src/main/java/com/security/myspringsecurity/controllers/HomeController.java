@@ -1,5 +1,7 @@
 package com.security.myspringsecurity.controllers;
 
+import com.security.myspringsecurity.models.Authority;
+import com.security.myspringsecurity.repos.AuthoritiesRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,4 +20,5 @@ public class HomeController {
     public String helloPage(){
         return "<h1>Hello World!</h1>";
     }
+
 }

@@ -1,5 +1,6 @@
 package com.security.myspringsecurity.models;
 
+import com.security.myspringsecurity.repos.AuthoritiesRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,21 +11,26 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserWithRole implements UserDetails {
+
     private Long id;
     private String username;
     private String password;
-
+    private List<Authority> authorities;
     public UserWithRole(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
+        this.authorities = user.getAuthorities();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-       Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("read"));
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        authorities.forEach((authority)->{
+            System.out.println(authority.getName());
+            grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+        });
         return grantedAuthorities;
     }
 
@@ -58,3 +64,4 @@ public class UserWithRole implements UserDetails {
         return true;
     }
 }
+
